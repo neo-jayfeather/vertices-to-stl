@@ -1,0 +1,11 @@
+requirements
+- python 3.12
+- numpy & trimesh (py -m pip install numpy trimesh, in directory within cmd)
+- a computer
+- a text file
+
+instructions 
+- put text file in the same directory as the python file, or give the entire path
+- num_verticies = lines
+- num_coordinates = numbers/line
+- save program, run program, use output
