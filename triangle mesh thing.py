@@ -10,8 +10,9 @@ with open('triangle_points1.txt', 'r') as file: # open text file
     lines = file.readlines()
     for x in range(num_vertices):
         for y in range(num_coordinates):
-            vertices[x][y] = float(lines[x].split(' ')[y]) #pain
-
+            #vertices[x][y] = float(lines[x].split(' ')[y]) #pain
+            vertices[x][y] = float(lines[x].rstrip().replace('\t',' ').split(' ')[y]) # no pain
+            
 for i in range(num_vertices):
     triangles.append([3 * i, 3 * i + 1, 3 * i + 2]) # triangle array defenition
     # triangle one uses verticies 0,1,2 etc.
