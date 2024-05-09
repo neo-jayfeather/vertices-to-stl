@@ -1,13 +1,15 @@
 import numpy as np # needed libraries
 import trimesh
-num_vertices = 1200 # text file size (will probably automate later)
-num_coordinates = 9
+num_vertices = 0 # text file size (will probably automate later)
+num_coordinates = 0
 triangles = []
 
 vertices = [[0.0] * num_coordinates for _ in range(num_vertices)] # define list
 
 with open('triangle_points1.txt', 'r') as file: # open text file
     lines = file.readlines()
+    num_vertices = len(lines)
+    num_coordinates = len(lines[0].rstrip().replace('\t',' ').split(' ')) #i hope this works, will test at home or something
     for x in range(num_vertices):
         for y in range(num_coordinates):
             #vertices[x][y] = float(lines[x].split(' ')[y]) #pain
