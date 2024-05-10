@@ -11,6 +11,10 @@ random_colors = np.random.randint(0, 256, size=(num_colors, 4))
 
 # Assign random colors to each face
 for i, facet in enumerate(cube_mesh.facets):
+<<<<<<< Updated upstream
+=======
+    print(random_colors)
+>>>>>>> Stashed changes
     cube_mesh.visual.face_colors[facet] = random_colors[i]
 
 # Export the cube mesh to a GLB file (binary GLTF)
