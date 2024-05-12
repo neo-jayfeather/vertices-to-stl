@@ -1,5 +1,6 @@
 import numpy as np # needed libraries
 import trimesh
+import os
 path = 'sRGB_in_abL.txt'
 pathName = path.split('\\')[len(path.split('\\'))-1] # complex way to get file name after last \
 pathName = path.split('.')[len(path.split('.'))-2] # complex way to remove .txt or ending
@@ -15,9 +16,16 @@ with open(path, 'r') as file: # open text file
     for x in range(num_vertices):
         for y in range(num_coordinates):
             vertices[x][y] = float(lines[x].rstrip().replace('\t',' ').split(' ')[y]) # no pain
+        temp = vertices[x]
+        
+        #vertices[x] = [temp[1],temp[0],temp[2],temp[4],temp[3],temp[5],temp[7],temp[6],temp[8]]  # Swap (0, 1)
+        #vertices[x] = [temp[2],temp[1],temp[0],temp[5],temp[4],temp[3],temp[8],temp[7],temp[6]]
+        vertices[x] = [temp[0], temp[2], temp[1], temp[3], temp[5], temp[4], temp[6], temp[8], temp[7]]
+        #dumb solution to dumb problem, but it works
+        
 for i in range(num_vertices):
-    triangles.append([3 * i, 3 * i + 1, 3 * i + 2]) # triangle array defenition
-    # triangle one uses verticies 0,1,2 etc.
+    triangles.append([3 * i + 0, 3 * i + 1, 3 * i + 2]) # triangle array defenition
+    # triangle one uses vertiies 0,1,2 etc.
 
 vertices_array = np.array(vertices).reshape(-1, 3) # helpful
 mesh = trimesh.Trimesh(vertices=vertices_array, faces=triangles) #mesh creation
@@ -34,6 +42,15 @@ with open('sRGB_in_abL_color.txt' ,'r') as file:
         allColors[x][3] = 255
         #print(allColors[x])
         mesh.visual.face_colors[x] = allColors[x]
-    
-mesh.export(f'{pathName} output.glb', file_type='glb') # mesh created
+def get_avail_filename(base):
+    filename, ext = os.path.splitext(base)
+    new_filename = base
+    count = 1
+    while os.path.exists(new_filename):
+        new_filename = f"{filename}({count}){ext}"
+        count += 1
+    return new_filename
+output_filename = f"{pathName}_output.glb"
+available_filename = get_avail_filename(output_filename)
+mesh.export(available_filename, file_type='glb') # mesh created
 print("done") #confirmation
