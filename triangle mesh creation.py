@@ -22,17 +22,6 @@ with open(path, 'r') as file: # open text file
         num_vertices = len(lines)
         num_coordinates = len(lines[0].rstrip().replace('\t',' ').split(' ')) #i hope this works, will test at home or something
     vertices = [[0.0] * num_coordinates for _ in range(num_vertices)] # define list
-    #lines = np.array(lines).reshape(1,-1)
-    '''for x in range(num_vertices):
-        for y in range(num_coordinates):
-            vertices[x][y] = float(lines[x].rstrip().replace('\t',' ').split(' ')[y]) # no pain
-        temp = vertices[x]
-        #vertices[x] = [temp[1],temp[0],temp[2],temp[4],temp[3],temp[5],temp[7],temp[6],temp[8]]  # Swap (0, 1)
-        #vertices[x] = [temp[2],temp[1],temp[0],temp[5],temp[4],temp[3],temp[8],temp[7],temp[6]]
-        vertices[x] = [temp[0], temp[2], temp[1], temp[3], temp[5], temp[4], temp[6], temp[8], temp[7]]
-        #dumb solution to dumb problem, but it works
-    '''
-    
     for x in range(num_vertices):
         for y in range(num_coordinates):
             vertices[x][y] = float(lines[x].rstrip().replace('\t',' ').split(' ')[y]) # no pain
@@ -42,9 +31,11 @@ with open(path, 'r') as file: # open text file
         vertices[x] = [vertices[x][a],vertices[x][b],vertices[x][c]]
 for i in range(num_vertices):
     triangles.append([3 * i + 0, 3 * i + 1, 3 * i + 2]) # triangle array defenition
+    if(i%2 == 1):
+        triangles[i] = [triangles[i][2], triangles[i][1], triangles[i][0]]
     # triangle one uses vertiies 0,1,2 etc.
 
-#vertices_array = np.array(vertices).reshape(-1, 3) # helpful
+
 mesh = trimesh.Trimesh(vertices=vertices, faces=triangles) #mesh creation
 with open('sRGB_in_abL_color.txt' ,'r') as file:
     colors = file.readlines()
@@ -56,8 +47,7 @@ with open('sRGB_in_abL_color.txt' ,'r') as file:
             allColors[x][y] = float(colors[x].rstrip().replace('\t',' ').split(' ')[y]) # no pain
 
     for x in range(num_lines):
-        allColors[x][3] = 255
-        #print(allColors[x])
+        allColors[x][3] = 255 #assign alpha
         mesh.visual.face_colors[x] = allColors[x]
 
 output_filename = f"{pathName}_output.glb"
