@@ -32,9 +32,9 @@ with open(path, 'r') as file: # open text file
 nCount = 0
 for i in range(num_vertices):
     triangles.append([3 * i + 0, 3 * i + 1, 3 * i + 2]) # triangle array defenition
-    if(i%200 >= 100 and (i <= 200 or (i > 400 and i <= 600) or (i > 800 and i<= 1000))):
+    if(i%200 >= 100 and (i < 200 or (i > 400 and i <= 600) or (i > 800 and i<= 1000))):
         triangles[i] = [triangles[i][2], triangles[i][1], triangles[i][0]]
-    if(i%200 < 100 and ((i >= 200 and i < 400) or (i > 600 and i <= 800) or (i >= 1000 and i <= 1200))):
+    if(i%200 < 100 and ((i >= 200 and i < 400) or (i >= 600 and i <= 800) or (i > 1000 and i <= 1200))):
         triangles[i] = [triangles[i][2], triangles[i][1], triangles[i][0]] #handles bottom
 # triangle one uses vertiies 0,1,2 etc.
 #complicated triangle flipping lol
