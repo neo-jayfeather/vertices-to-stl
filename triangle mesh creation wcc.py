@@ -3,7 +3,9 @@ import trimesh  # Importing trimesh for creating and manipulating 3D meshes
 import os  # Importing os for interacting with the operating system
 
 # Path to the input file
-path = 'sRGB_in_abL.txt'
+path = 'canon_in_abL.txt'
+pathcolor = 'canon_in_abL_color.txt'
+
 # Extracting the filename from the path
 pathName = os.path.splitext(path)[0]
 
@@ -81,7 +83,7 @@ with open(path, 'r') as file:
     # Reordering the vertices
     for x in range(len(vertices)):
         a, b, c = 0, 2, 1
-        vertices[x] = [vertices[x][a],vertices[x][b],vertices[x][c]]
+        vertices[x] = [vertices[x][a],vertices[x][b],-vertices[x][c]]
 
 # Counter for the number of triangles
 nCount = 0
@@ -105,7 +107,7 @@ for i in range(num_vertices):
 mesh = trimesh.Trimesh(vertices=vertices, faces=triangles)
 
 # Opening the file with the colors
-with open('sRGB_in_abL_color.txt' ,'r') as file:
+with open(pathcolor,'r') as file:
     # Reading all lines into a list
     colors = file.readlines()
     # Determining the number of lines and colors
