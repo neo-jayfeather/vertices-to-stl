@@ -131,7 +131,8 @@ output_filename = f"{pathName}_output.glb"
 # Ensuring the filename is unique
 available_filename = get_avail_filename(output_filename)
 # Exporting the mesh to a .glb file
-mesh.export(available_filename, file_type='glb')
+print(f'{pathName}/' + available_filename)
+mesh.export(f'{pathName}/' + available_filename, file_type='glb')
 
 # Printing a confirmation message
 print("done")
